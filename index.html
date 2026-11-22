@@ -30,6 +30,7 @@
   --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark;}
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 var(--font);-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit;color:inherit}
@@ -233,26 +234,26 @@ body.view-map .dash{display:none}
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
     <input id="q" type="search" placeholder="搜索房源、区域或邮编" aria-label="搜索房源、区域或邮编">
   </label>
-  <div class="sel"><select id="fTier" aria-label="推荐程度"><option value="">全部推荐程度</option><option value="A">重点推荐</option><option value="B">可考虑</option></select></div>
+  <div class="sel" hidden><select id="fTier" aria-label="推荐程度"><option value="">全部推荐程度</option><option value="A">重点推荐</option><option value="B">可考虑</option></select></div>
   <div class="sel"><select id="fWest" aria-label="区域"><option value="">全部区域</option><option value="1">只看西区</option></select></div>
   <div class="sel"><select id="fSize" aria-label="面积"><option value="">全部面积</option><option value="0-5000">5,000 尺以下</option><option value="5000-8000">5,000–8,000 尺</option><option value="8000-99999">8,000 尺以上</option></select></div>
   <div class="sel"><select id="fRent" aria-label="租金"><option value="">全部租金</option><option value="known">有公开租金</option><option value="poa">面议</option></select></div>
-  <div class="sel"><select id="sort" aria-label="排序"><option value="no">推荐顺序</option><option value="size-desc">面积从大到小</option><option value="size-asc">面积从小到大</option><option value="psf-asc">单价从低到高</option><option value="psf-desc">单价从高到低</option></select></div>
+  <div class="sel"><select id="sort" aria-label="排序"><option value="no">默认顺序</option><option value="size-desc">面积从大到小</option><option value="size-asc">面积从小到大</option><option value="psf-asc">单价从低到高</option><option value="psf-desc">单价从高到低</option></select></div>
 </div>
 
 <section class="dash" aria-label="概览">
   <div class="dash-head">
-    <div><h1>候选铺位概览</h1><p>为面向 3–12 岁儿童和家长的室内游乐品牌筛选铺位，优先西伦敦住宅项目下的地面层底商，目标 3,000–10,000 sq ft。数字随上方筛选条件实时变化，点击任意房源查看详情。</p></div>
+    <div><h1>推荐铺位</h1><p>西伦敦及周边、住宅项目下方的地面层底商，面积约 3,000–10,000 sq ft。点击任意房源查看照片、楼宇介绍和区域特点。</p></div>
   </div>
-  <div class="kpis" id="kpis"></div>
-  <div class="charts">
+  <div class="kpis" id="kpis" hidden></div>
+  <div class="charts" hidden>
     <div class="panel"><h2>面积分布</h2><p class="sub">按可租面积分段（sq ft）</p><div class="donut-wrap" id="donut"></div></div>
     <div class="panel"><h2>面积最大 Top 5</h2><p class="sub">单个可整租面积</p><div class="bars" id="barSize"></div></div>
     <div class="panel"><h2>单价最低 Top 5</h2><p class="sub">有公开报价的铺位，£ / sq ft / 年</p><div class="bars" id="barPsf"></div></div>
   </div>
   <div class="panel tpanel">
-    <div class="ph"><h2>全部候选</h2><p class="sub" id="tcount"></p></div>
-    <div class="tscroll"><table class="dt"><thead><tr><th>#</th><th>图片</th><th>房源</th><th>区域</th><th>面积 sq ft</th><th>楼层</th><th>租金 / 年</th><th>£ / sq ft</th><th>住宅关系</th><th>可入住</th><th>推荐</th></tr></thead><tbody id="dtBody"></tbody></table></div>
+    <div class="ph"><h2>全部铺位</h2><p class="sub" id="tcount"></p></div>
+    <div class="tscroll"><table class="dt"><thead><tr><th>#</th><th>图片</th><th>房源</th><th>区域</th><th>面积 sq ft</th><th>楼层</th><th>租金 / 年</th><th>£ / sq ft</th><th>住宅关系</th><th>可入住</th></tr></thead><tbody id="dtBody"></tbody></table></div>
   </div>
   <div class="foot"><img src="img/logo.png" alt="Charles William London Property Investment"><div>由 Charles William 商业部整理。信息来自公开挂牌、开发商和规划资料，租金为挂牌报价，不含 VAT、服务费和营业税，以业主最新确认为准。</div></div>
 </section>
@@ -260,8 +261,8 @@ body.view-map .dash{display:none}
 <div class="split">
   <main class="list">
     <div class="list-head"><h1>搜索结果：<b>西伦敦及周边</b></h1><span class="n" id="count"></span></div>
-    <p class="intro">为一家面向 3–12 岁儿童和家长的室内游乐品牌筛选铺位。优先住宅项目下方的地面层底商。点击卡片查看楼宇介绍、区域特点和待确认事项。</p>
-    <div class="stats" id="stats"></div>
+    <p class="intro">为一家面向 3–12 岁儿童和家长的室内游乐品牌筛选铺位。优先住宅项目下方的地面层底商。点击卡片查看照片、楼宇介绍和区域特点。</p>
+    <div class="stats" id="stats" hidden></div>
     <div class="grid" id="grid"></div>
     <div class="foot"><img src="img/logo.png" alt="Charles William London Property Investment"><div>由 Charles William 商业部整理。信息来自公开挂牌、开发商和规划资料，租金为挂牌报价，不含 VAT、服务费和营业税，以业主最新确认为准。</div></div>
   </main>
@@ -334,7 +335,7 @@ body.view-map .dash{display:none}
     ].map(([a,b])=>`<div class="stat">${a}<b>${b}</b></div>`).join('');
     $('#grid').innerHTML=list.length?list.map(d=>`
       <button type="button" class="card" data-k="${d.key}">
-        <div class="thumb"><img src="img/${file(d.imgs[0])}" alt="" loading="lazy"><span class="no">${d.no}</span><span class="tier ${d.tier}">${esc(T[d.tier].label)}</span>${isMap(d)?'<span class="mapnote">位置图</span>':''}</div>
+        <div class="thumb"><img src="img/${file(d.imgs[0])}" alt="" loading="lazy"><span class="no">${d.no}</span>${isMap(d)?'<span class="mapnote">位置图</span>':''}</div>
         <div class="cbody">
           <div class="crow"><div class="cname">${esc(d.name)}</div><div class="price ${d.rentPa?'':'poa'}">${priceShort(d)}</div></div>
           <div class="cloc">${esc(d.area)} · ${esc(d.pc)}${d.west?' · <span class="west">西区</span>':''}</div>
@@ -355,7 +356,7 @@ body.view-map .dash{display:none}
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
     map.zoomControl.setPosition('bottomright');
     data.forEach(d=>{
-      const html=`<div class="pp ${d.tier}" data-k="${d.key}"><i>${d.no}</i>${d.rentPa?k(d.rentPa):'面议'}</div>`;
+      const html=`<div class="pp" data-k="${d.key}"><i>${d.no}</i>${d.rentPa?k(d.rentPa):'面议'}</div>`;
       const m=L.marker([d.lat,d.lng],{icon:L.divIcon({html,className:'',iconSize:[0,0]}),title:d.name,keyboard:true});
       m.on('click',()=>open(d.key));
       m.on('mouseover',()=>hl(d.key,true)); m.on('mouseout',()=>hl(d.key,false));
@@ -380,7 +381,7 @@ body.view-map .dash{display:none}
     $('#dBody').innerHTML=`
       <div class="gal" id="gal">${imgs}${multi?'<button class="arr prev" type="button" aria-label="上一张">‹</button><button class="arr next" type="button" aria-label="下一张">›</button><span class="cnt">1 / '+d.imgs.length+'</span>':''}<span class="src" id="galCap">${esc(cap(d.imgs[0])||(isMap(d)?'位置图 · © OpenStreetMap':'图片：'+d.src))}</span></div>
       <div class="d-pad">
-        <div class="d-tags"><span class="pill ${d.tier}">${esc(T[d.tier].label)}</span>${d.west?'<span class="pill">西区</span>':''}<span class="pill B" style="background:var(--bg);color:var(--muted)">#${d.no}</span></div>
+        <div class="d-tags"><span class="pill">#${d.no}</span>${d.west?'<span class="pill">西区</span>':''}</div>
         <h2 class="d-title">${esc(d.name)}</h2>
         <p class="d-loc">${esc(d.sub?d.sub+' · ':'')}${esc(d.area)} · ${esc(d.pc)} · ${esc(d.borough)}</p>
         <div class="d-price"><b>${d.rentPa?k(d.rentPa)+' / 年':'租金面议'}</b><span>${esc(d.rent)}${d.psf&&!/sq ft/.test(d.rent)?' · 约 £'+d.psf.toFixed(2)+' / sq ft':''}</span></div>
@@ -395,7 +396,7 @@ body.view-map .dash{display:none}
       </div>
       <div class="sec"><h3>楼宇介绍</h3><p>${esc(d.building)}</p></div>
       <div class="sec"><h3>区域特点</h3><p>${esc(d.district)}</p></div>
-      <div class="sec two"><div><h3>适配亮点</h3><ul>${d.fit.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="ask"><h3 style="--brand:var(--warn)">待确认</h3><ul>${d.gaps.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></div>`;
+`;
     $('#dBody').scrollTop=0;
     if(multi){ let i=0; const ims=$('#gal').querySelectorAll('img'), cnt=$('#gal .cnt');
       const go=n=>{i=(n+ims.length)%ims.length; ims.forEach((im,j)=>im.classList.toggle('on',j===i)); cnt.textContent=(i+1)+' / '+ims.length; $('#galCap').textContent=ims[i].dataset.cap;};
@@ -451,7 +452,7 @@ body.view-map .dash{display:none}
       <td class="num">${d.psf?'£'+d.psf.toFixed(2):'—'}</td>
       <td>${esc(d.resi)}</td>
       <td>${esc(short(d.avail))}</td>
-      <td><span class="chip ${d.tier}">${esc(T[d.tier].label)}</span></td></tr>`).join('');
+      </tr>`).join('');
     $('#dtBody').querySelectorAll('tr').forEach(tr=>{tr.onclick=()=>open(tr.dataset.k); tr.onkeydown=e=>{if(e.key==='Enter')open(tr.dataset.k)};});
   }
   const _render=render; render=function(){_render(); renderDash();};
