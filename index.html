@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>西伦敦儿童乐园选址 | Site Brief</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* 布局：顶部导航 → 项目概要 → 地图 + 列表 → 逐个房源档案。版式参照 The Oval Market Brief。 */
+:root{
+  --bg:#f6f7f4; --paper:#ffffff; --ink:#1d2421; --muted:#5f6b66; --line:#dde2dd;
+  --accent:#1f5c4a; --accent-soft:#e3eee9;
+  --tA:#1f7a56; --tA-bg:#e2f1ea; --tB:#a86a12; --tB-bg:#f7ecd9; --tC:#62707a; --tC-bg:#e8ecef;
+  --pin-ring:#ffffff;
+  --display:"Space Grotesk","Noto Sans SC",system-ui,sans-serif;
+  --body:"Noto Sans SC",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121614; --paper:#1a201d; --ink:#e6ebe8; --muted:#9aa7a1; --line:#2c3531;
+  --accent:#7cc7a8; --accent-soft:#1f2e28;
+  --tA:#6fd1a5; --tA-bg:#173126; --tB:#e5b25f; --tB-bg:#33281a; --tC:#a9b6bf; --tC-bg:#262d32;
+  --pin-ring:#121614; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#121614; --paper:#1a201d; --ink:#e6ebe8; --muted:#9aa7a1; --line:#2c3531;
+  --accent:#7cc7a8; --accent-soft:#1f2e28;
+  --tA:#6fd1a5; --tA-bg:#173126; --tB:#e5b25f; --tB-bg:#33281a; --tC:#a9b6bf; --tC-bg:#262d32;
+  --pin-ring:#121614; color-scheme:dark;}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:1000;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.logo img{height:40px;width:auto}
+.brand{font:600 13px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;padding-left:16px;border-left:1px solid var(--line)}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.hero-logo{height:110px;width:auto;flex:none}
+.sign{display:flex;align-items:center;gap:14px;margin-top:18px}
+.sign img{height:54px;width:auto}
+@media (max-width:820px){.hero-logo{display:none}}
+.nav-links{display:flex;gap:18px;font-size:13px;overflow-x:auto;scrollbar-width:none}
+.nav-links a{color:var(--muted);text-decoration:none;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-links span{font-family:var(--display);margin-right:4px}
+.btn{margin-left:auto;font:500 12px/1 var(--body);border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:8px 12px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+
+/* hero */
+.hero{padding-block:44px 28px}
+.eyebrow{font:600 11px/1 var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+h1{font:600 clamp(30px,5vw,46px)/1.15 var(--display);margin:14px 0 12px;letter-spacing:-.01em;text-wrap:balance}
+.lede{max-width:760px;color:var(--muted);margin:0}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;margin:22px 0 0;padding:0;list-style:none;font-size:14px}
+.facts b{font-weight:700}
+.brief{margin-top:22px;background:var(--accent-soft);border-radius:8px;padding:14px 18px;font-size:14px}
+.brief b{color:var(--accent)}
+
+section{padding-block:30px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-bottom:6px}
+.sec-no{font:600 11px/1 var(--display);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+h2{font:600 26px/1.3 var(--display);margin:6px 0 4px;text-wrap:balance}
+.sec-note{color:var(--muted);font-size:14px;margin:0 0 18px;max-width:820px}
+
+/* tiers legend */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:4px 10px;border-radius:999px;border:1px solid transparent;cursor:pointer;background:var(--paper);border-color:var(--line);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.dot{width:9px;height:9px;border-radius:50%}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap}
+.tag.A{background:var(--tA-bg);color:var(--tA)} .tag.B{background:var(--tB-bg);color:var(--tB)} .tag.C{background:var(--tC-bg);color:var(--tC)}
+.tag.west{background:var(--accent-soft);color:var(--accent)}
+
+/* map */
+.map-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.map-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line);font-size:13px}
+.map-bar .ctl{display:flex;gap:6px}
+#map{height:560px;background:var(--line)}
+.map-foot{padding:10px 14px;font-size:12px;color:var(--muted);border-top:1px solid var(--line)}
+.pin{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:700 12px/1 var(--display);color:#fff;border:2px solid var(--pin-ring);box-shadow:0 1px 4px rgba(0,0,0,.35)}
+.pin.A{background:var(--tA)} .pin.B{background:var(--tB)} .pin.C{background:var(--tC)}
+:root[data-theme="dark"] .pin,.dark .pin{color:#111}
+.leaflet-popup-content{font:13px/1.5 var(--body);margin:10px 12px}
+.leaflet-popup-content b{font-family:var(--display)}
+.leaflet-popup-content a{font-weight:500}
+.leaflet-container{font-family:var(--body)}
+
+/* table */
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 10px}
+.tools .count{font-size:13px;color:var(--muted);margin-right:auto}
+.tools select{font:13px var(--body);padding:7px 10px;border-radius:6px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.tbl-wrap{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5px}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 11px/1.3 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg);position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:var(--accent-soft)}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+td .nm{font-weight:700}
+td .sm{color:var(--muted);font-size:12px}
+.no{font:700 13px/1 var(--display);color:var(--muted)}
+.stats{display:flex;flex-wrap:wrap;gap:8px 24px;font-size:13px;color:var(--muted);margin-top:10px}
+.stats b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* cards */
+.cards{display:grid;gap:26px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;scroll-margin-top:70px}
+.card-top{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+.gallery{position:relative;background:var(--line);min-height:300px}
+.gallery img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .3s}
+.gallery img.on{opacity:1}
+.gal-nav{position:absolute;bottom:10px;left:10px;display:flex;gap:6px;z-index:2}
+.gal-nav button{width:26px;height:26px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font:600 11px var(--display);cursor:pointer}
+.gal-nav button[aria-current="true"]{background:#fff;color:#000}
+.gal-src{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;padding:3px 8px;border-radius:4px;z-index:2}
+.gal-badge{position:absolute;top:12px;left:12px;z-index:2;font:700 18px/1 var(--display);background:var(--paper);color:var(--ink);width:40px;height:40px;border-radius:50%;display:grid;place-items:center;box-shadow:0 1px 6px rgba(0,0,0,.25)}
+.card-head{padding:22px 24px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card-head .tags{display:flex;flex-wrap:wrap;gap:6px}
+.card h3{font:600 24px/1.25 var(--display);margin:0;text-wrap:balance}
+.card .loc{color:var(--muted);font-size:13.5px;margin:-4px 0 0}
+dl.kv{display:grid;grid-template-columns:auto 1fr;gap:7px 14px;margin:4px 0 0;font-size:13.5px}
+dl.kv dt{color:var(--muted);white-space:nowrap}
+dl.kv dd{margin:0;font-weight:500;min-width:0}
+.card-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-top:1px solid var(--line)}
+.blk{padding:18px 24px;min-width:0}
+.blk+.blk{border-left:1px solid var(--line)}
+.blk h4{font:600 11px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.blk p{margin:0;max-width:62ch}
+.card-foot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line);background:var(--bg)}
+.card-foot .blk ul{margin:0;padding-left:18px;font-size:13.5px}
+.card-foot .blk li{margin:2px 0}
+.ok h4{color:var(--tA)} .ask h4{color:var(--tB)}
+
+.notes{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-block:24px 50px}
+.notes ul{padding-left:18px;margin:6px 0}
+
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:820px){
+  .card-top,.card-body,.card-foot{grid-template-columns:1fr}
+  .blk+.blk{border-left:0;border-top:1px solid var(--line)}
+  .gallery{min-height:240px;aspect-ratio:16/10}
+  #map{height:420px}
+  .nav-links{display:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.gallery img{transition:none}}
+@media print{
+  .nav,.map-card,.tools,.gal-nav{display:none!important}
+  body{background:#fff}
+  .card{break-inside:avoid;border-color:#ccc}
+  .gallery{min-height:220px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Charles William London Property Investment"><img src="img/logo.png" alt="Charles William London Property Investment" width="62" height="40"></a>
+    <div class="brand">West London / Site Brief</div>
+    <nav class="nav-links" aria-label="页面目录">
+      <a href="#map-sec"><span>01</span>地图</a>
+      <a href="#list-sec"><span>02</span>总览</a>
+      <a href="#cards-sec"><span>03</span>逐个房源</a>
+    </nav>
+    <button class="btn" id="printBtn" type="button">打印 / PDF ↗</button>
+  </div>
+</header>
+
+<main>
+<div class="wrap hero" id="top">
+  <div class="hero-top">
+  <div>
+  <div class="eyebrow">Charles William · Commercial · 2026 年 11 月</div>
+  <h1>儿童游乐场选址：住宅楼底商候选清单</h1>
+  </div>
+  <img class="hero-logo" src="img/logo.png" alt="" aria-hidden="true">
+  </div>
+  <p class="lede">为一家以 3–12 岁儿童和家长为对象的室内游乐品牌寻找铺位。客户优先考虑西伦敦、住宅项目下方的底商，面积 3,000–10,000 sq ft。下面是筛选后的候选，每个都附关键信息、楼宇介绍和区域特点。</p>
+  <ul class="facts">
+    <li><b>目标面积</b>　3,000–10,000 sq ft</li>
+    <li><b>优先位置</b>　西伦敦 · 住宅楼下</li>
+    <li><b>客群</b>　3–12 岁儿童及家长</li>
+    <li><b>候选</b>　<span id="factCount">26</span> 个</li>
+  </ul>
+  <div class="brief"><b>选址重点：</b>周边家庭户多、地面层、能放下活动区和派对区、层高够、交通和停车方便。层高在多数挂牌里都没写，需要逐个找业主确认。</div>
+</div>
+
+<section id="map-sec">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">01 / Map</span></div>
+    <h2>候选位置地图</h2>
+    <p class="sec-note">编号和下方列表、房源档案一一对应。颜色表示推荐程度，点击点位可以看简要信息，再点“查看档案”跳到详情。</p>
+    <div class="legend" id="tierChips" role="group" aria-label="按推荐程度筛选"></div>
+    <div class="map-card">
+      <div class="map-bar">
+        <span id="mapCount"></span>
+        <div class="ctl">
+          <button class="btn" type="button" id="fitAll">显示全部</button>
+          <button class="btn" type="button" id="fitWest">只看西区</button>
+        </div>
+      </div>
+      <div id="map" role="region" aria-label="候选房源地图"></div>
+      <div class="map-foot">点位按邮编或开发项目位置标注，不是精确门牌。底图 © OpenStreetMap contributors。</div>
+    </div>
+  </div>
+</section>
+
+<section id="list-sec">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">02 / Overview</span></div>
+    <h2>候选总览</h2>
+    <p class="sec-note">租金为挂牌报价，不含 VAT、服务费和营业税。“面议”表示挂牌没有公开租金。点击任意一行跳到对应房源档案。</p>
+    <div class="tools">
+      <span class="count" id="tblCount"></span>
+      <select id="sortSel" aria-label="排序方式">
+        <option value="no">按推荐顺序</option>
+        <option value="size-desc">面积：大 → 小</option>
+        <option value="size-asc">面积：小 → 大</option>
+        <option value="psf-asc">单价：低 → 高</option>
+        <option value="psf-desc">单价：高 → 低</option>
+      </select>
+      <button class="btn" type="button" id="csvBtn">下载 CSV ↓</button>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>#</th><th>房源</th><th>区域</th><th>面积 sq ft</th><th>租金</th><th>£ / sq ft</th><th>楼上 / 周边住宅</th><th>可入住</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+</section>
+
+<section id="cards-sec">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">03 / Profiles</span></div>
+    <h2>逐个房源档案</h2>
+    <p class="sec-note">每个房源包含关键信息、楼宇介绍、区域特点、适配亮点和待确认事项。没有实景照片的房源用位置图代替。</p>
+    <div class="cards" id="cards"></div>
+  </div>
+</section>
+
+<div class="wrap notes">
+  <b>说明</b>
+  <ul>
+    <li>信息来自公开挂牌、开发商和规划资料，整理于 2026 年 11 月；面积、租金和可租状态以业主最新确认为准。</li>
+    <li>挂牌租金不等于成交租金，大部分铺位都有谈判空间，新楼通常可以争取免租期或装修补贴。</li>
+    <li>室内儿童游乐场一般按 Class E(d)（室内运动和休闲）处理；F1 或受限用途的铺位需要先确认规划和租约条款。</li>
+  </ul>
+  <div class="sign"><img src="img/logo.png" alt="Charles William London Property Investment"><span>由 Charles William 商业部整理</span></div>
+</div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="data.js"></script>
+<script>
+(function(){
+  const T = window.TIERS, L0 = window.LISTINGS;
+  const data = L0.map((d,i)=>Object.assign({no:i+1},d));
+  const $ = s=>document.querySelector(s);
+  const esc = s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  let active = new Set(['A','B','C']);
+
+  $('#factCount').textContent = data.length;
+  $('#printBtn').addEventListener('click',()=>window.print());
+
+  // tier chips
+  const chips = $('#tierChips');
+  Object.entries(T).forEach(([k,v])=>{
+    const n = data.filter(d=>d.tier===k).length;
+    const b = document.createElement('button');
+    b.type='button'; b.className='chip'; b.setAttribute('aria-pressed','true'); b.dataset.t=k;
+    b.innerHTML = `<span class="dot" style="background:var(--t${k})"></span>${esc(v.label)} · ${n}`;
+    b.title = v.note;
+    b.addEventListener('click',()=>{
+      if(active.has(k)&&active.size>1){active.delete(k)} else active.add(k);
+      chips.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',active.has(c.dataset.t)));
+      refresh();
+    });
+    chips.appendChild(b);
+  });
+
+  // map
+  let map=null, markers={};
+  if(window.L){
+    map = L.map('map',{scrollWheelZoom:false,zoomControl:true}).setView([51.5,-0.2],11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
+    map.on('click',()=>map.scrollWheelZoom.enable());
+    data.forEach(d=>{
+      const icon = L.divIcon({className:'',html:`<div class="pin ${d.tier}">${d.no}</div>`,iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-14]});
+      const m = L.marker([d.lat,d.lng],{icon,title:d.name,riseOnHover:true});
+      m.bindPopup(`<b>${d.no}. ${esc(d.name)}</b><br>${esc(d.area)} · ${esc(d.pc)}<br>${esc(d.size)} sq ft<br>${esc(d.rent)}<br><a href="#card-${d.key}">查看档案 →</a>`);
+      markers[d.key]=m;
+    });
+    $('#fitAll').addEventListener('click',()=>fit(visible()));
+    $('#fitWest').addEventListener('click',()=>fit(visible().filter(d=>d.west)));
+  } else {
+    $('#map').innerHTML='<p style="padding:20px">地图加载失败，请检查网络后刷新。</p>';
+  }
+  function fit(list){ if(!map||!list.length) return; map.fitBounds(L.latLngBounds(list.map(d=>[d.lat,d.lng])),{padding:[36,36]}); }
+  function visible(){ return data.filter(d=>active.has(d.tier)); }
+
+  // table
+  const fmtN = n=>n==null?'—':n.toLocaleString('en-GB');
+  function sorted(){
+    const v = $('#sortSel').value, list = visible().slice();
+    const nz = (x,hi)=>x==null?(hi?-Infinity:Infinity):x;
+    if(v==='size-desc') list.sort((a,b)=>b.sizeNum-a.sizeNum);
+    if(v==='size-asc') list.sort((a,b)=>a.sizeNum-b.sizeNum);
+    if(v==='psf-asc') list.sort((a,b)=>nz(a.psf)-nz(b.psf));
+    if(v==='psf-desc') list.sort((a,b)=>nz(b.psf,1)-nz(a.psf,1));
+    return list;
+  }
+  function renderTable(){
+    const list = sorted();
+    $('#tbody').innerHTML = list.map(d=>`<tr data-k="${d.key}" tabindex="0">
+      <td><span class="no">${d.no}</span></td>
+      <td><div class="nm">${esc(d.name)}</div><div class="sm">${esc(d.sub)}</div><span class="tag ${d.tier}">${esc(T[d.tier].label)}</span></td>
+      <td>${esc(d.area)}<div class="sm">${esc(d.pc)} · ${esc(d.borough)}</div>${d.west?'<span class="tag west">西区</span>':''}</td>
+      <td class="num">${esc(d.size)}</td>
+      <td>${esc(d.rent)}</td>
+      <td class="num">${d.psf?('£'+d.psf.toFixed(2)):'—'}</td>
+      <td>${esc(d.resi)}</td>
+      <td>${esc(d.avail)}</td></tr>`).join('');
+    $('#tbody').querySelectorAll('tr').forEach(tr=>{
+      const go=()=>{location.hash='card-'+tr.dataset.k};
+      tr.addEventListener('click',go);
+      tr.addEventListener('keydown',e=>{if(e.key==='Enter')go()});
+    });
+    $('#tblCount').textContent = `${list.length} / ${data.length} 项`;
+    const ps = list.filter(d=>d.psf).map(d=>d.psf).sort((a,b)=>a-b);
+    const med = ps.length?(ps.length%2?ps[(ps.length-1)/2]:(ps[ps.length/2-1]+ps[ps.length/2])/2):null;
+    const avg = ps.length?ps.reduce((a,b)=>a+b,0)/ps.length:null;
+    $('#stats').innerHTML = ps.length?`有报价 <b>${ps.length}</b> 项 · 单价均值 <b>£${avg.toFixed(2)}</b> · 中位 <b>£${med.toFixed(2)}</b> · 范围 <b>£${ps[0].toFixed(2)}–£${ps[ps.length-1].toFixed(2)}</b> / sq ft / 年 · 西区 <b>${list.filter(d=>d.west).length}</b> 项`:'';
+  }
+  $('#sortSel').addEventListener('change',renderTable);
+
+  // csv
+  $('#csvBtn').addEventListener('click',()=>{
+    const cols=[['no','#'],['tier','推荐程度'],['name','房源'],['sub','备注'],['area','区域'],['pc','邮编'],['borough','行政区'],['size','面积 sq ft'],['floors','楼层'],['rent','租金'],['psf','£/sq ft'],['cond','交付状态'],['avail','可入住'],['use','用途'],['resi','楼上/周边住宅'],['gaps','待确认']];
+    const q=v=>'"'+String(v==null?'':Array.isArray(v)?v.join('；'):v).replace(/"/g,'""')+'"';
+    const rows=[cols.map(c=>q(c[1])).join(',')].concat(sorted().map(d=>cols.map(c=>q(c[0]==='tier'?T[d.tier].label:d[c[0]])).join(',')));
+    const blob=new Blob(['﻿'+rows.join('\n')],{type:'text/csv;charset=utf-8'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='west-london-play-sites.csv'; document.body.appendChild(a); a.click(); a.remove();
+  });
+
+  // cards
+  function renderCards(){
+    $('#cards').innerHTML = visible().map(d=>{
+      const imgs = d.imgs.map((s,i)=>`<img src="img/${s}" alt="${esc(d.name)} 图片 ${i+1}" loading="lazy" class="${i?'':'on'}">`).join('');
+      const dots = d.imgs.length>1?`<div class="gal-nav">${d.imgs.map((_,i)=>`<button type="button" aria-label="第 ${i+1} 张" aria-current="${i===0}">${i+1}</button>`).join('')}</div>`:'';
+      const isMap = d.imgs.length===1 && /_map\.jpg$/.test(d.imgs[0]);
+      return `<article class="card" id="card-${d.key}">
+        <div class="card-top">
+          <div class="gallery">${imgs}<div class="gal-badge">${d.no}</div>${dots}<div class="gal-src">${isMap?'位置图 · © OpenStreetMap':'图片：'+esc(d.src)}</div></div>
+          <div class="card-head">
+            <div class="tags"><span class="tag ${d.tier}">${esc(T[d.tier].label)}</span>${d.west?'<span class="tag west">西区</span>':''}</div>
+            <h3>${esc(d.name)}</h3>
+            <p class="loc">${esc(d.sub?d.sub+' · ':'')}${esc(d.area)} · ${esc(d.pc)} · ${esc(d.borough)}</p>
+            <dl class="kv">
+              <dt>面积</dt><dd>${esc(d.size)} sq ft</dd>
+              <dt>楼层</dt><dd>${esc(d.floors)}</dd>
+              <dt>租金</dt><dd>${esc(d.rent)}${d.psf&&!/sq ft/.test(d.rent)?` <span style="color:var(--muted)">（约 £${d.psf.toFixed(2)} / sq ft）</span>`:''}</dd>
+              <dt>交付状态</dt><dd>${esc(d.cond)}</dd>
+              <dt>可入住</dt><dd>${esc(d.avail)}</dd>
+              <dt>用途</dt><dd>${esc(d.use)}</dd>
+              <dt>住宅关系</dt><dd>${esc(d.resi)}</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="blk"><h4>楼宇介绍</h4><p>${esc(d.building)}</p></div>
+          <div class="blk"><h4>区域特点</h4><p>${esc(d.district)}</p></div>
+        </div>
+        <div class="card-foot">
+          <div class="blk ok"><h4>适配亮点</h4><ul>${d.fit.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+          <div class="blk ask"><h4>待确认</h4><ul>${d.gaps.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+        </div>
+      </article>`;
+    }).join('');
+    document.querySelectorAll('.gallery').forEach(g=>{
+      const ims=g.querySelectorAll('img'), bs=g.querySelectorAll('.gal-nav button');
+      bs.forEach((b,i)=>b.addEventListener('click',()=>{
+        ims.forEach((im,j)=>im.classList.toggle('on',i===j));
+        bs.forEach((x,j)=>x.setAttribute('aria-current',i===j));
+      }));
+    });
+  }
+
+  function refresh(){
+    const vis = visible();
+    if(map){ data.forEach(d=>{ const m=markers[d.key]; if(active.has(d.tier)) m.addTo(map); else m.remove(); }); }
+    $('#mapCount').textContent = `${vis.length} 个点位 · 西区 ${vis.filter(d=>d.west).length} 个`;
+    renderTable(); renderCards();
+  }
+  refresh();
+  fit(data);
+  if(location.hash){ const el=document.getElementById(location.hash.slice(1)); if(el) setTimeout(()=>el.scrollIntoView(),50); }
+})();
+</script>
+</body>
+</html>
