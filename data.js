@@ -2,8 +2,7 @@
 // 资料来源：LoopNet / Rightmove 挂牌信息、中介宣传册、公开规划与开发商资料（2026 年 11 月整理）
 window.TIERS = {
   A: { label: "重点推荐", note: "面积合适，位于住宅楼下或紧贴大型住宅社区" },
-  B: { label: "可考虑", note: "条件基本合适，有一两项需要权衡" },
-  C: { label: "客户保留 / 需确认", note: "客户指定保留，或可行性需先和业主确认" }
+  B: { label: "可考虑", note: "条件基本合适，有几项需要和业主确认" }
 };
 
 window.LISTINGS = [
@@ -281,10 +280,10 @@ window.LISTINGS = [
     imgs: ["queensrd_map.jpg"], src: "LoopNet"
   },
 
-  // ───────── C 客户保留 / 需确认 ─────────
+  // ───────── B 可考虑（续）─────────
   {
-    key: "finchley", tier: "C", west: false,
-    name: "317 Finchley Road", sub: "客户保留",
+    key: "finchley", tier: "B", west: false,
+    name: "317 Finchley Road", sub: "",
     area: "Finchley Road · Frognal", pc: "NW3 6EP", borough: "Camden",
     lat: 51.550424, lng: -0.183412,
     size: "4,650（地面约 2,650 + 地下约 2,000）", sizeNum: 4650, floors: "地面层 + 地下室",
@@ -298,8 +297,8 @@ window.LISTINGS = [
     imgs: ["finchley_1.jpg", "finchley_2.jpg"], src: "LoopNet / Rightmove"
   },
   {
-    key: "newkent", tier: "C", west: false,
-    name: "136–142 New Kent Road", sub: "New Kent Row · 客户保留",
+    key: "newkent", tier: "B", west: false,
+    name: "136–142 New Kent Road", sub: "New Kent Row",
     area: "Elephant & Castle", pc: "SE1 6UA", borough: "Southwark",
     lat: 51.493885, lng: -0.092094,
     size: "Ste 1：2,594；Ste 2：16,124（合计 18,718）", sizeNum: 16124, floors: "地面层",
@@ -313,8 +312,8 @@ window.LISTINGS = [
     imgs: ["newkent_map.jpg"], src: "LoopNet"
   },
   {
-    key: "penrhyn", tier: "C", west: false,
-    name: "12 Penrhyn Road", sub: "客户保留 · 前教堂",
+    key: "penrhyn", tier: "B", west: false,
+    name: "12 Penrhyn Road", sub: "前教堂",
     area: "Kingston upon Thames", pc: "KT1 2ED", borough: "Kingston",
     lat: 51.403645, lng: -0.304616,
     size: "4,142", sizeNum: 4142, floors: "地面层（独栋）",
@@ -328,7 +327,7 @@ window.LISTINGS = [
     imgs: ["penrhyn_map.jpg"], src: "LoopNet"
   },
   {
-    key: "jasmine", tier: "C", west: true,
+    key: "jasmine", tier: "B", west: true,
     name: "Jasmine House · Unit 30", sub: "Battersea Reach",
     area: "Battersea Reach", pc: "SW18 1GL", borough: "Wandsworth",
     lat: 51.464121, lng: -0.183372,
@@ -343,7 +342,7 @@ window.LISTINGS = [
     imgs: ["jasmine_1.jpg", "jasmine_2.jpg"], src: "LoopNet / Rightmove"
   },
   {
-    key: "rosebank", tier: "C", west: true,
+    key: "rosebank", tier: "B", west: true,
     name: "Rosebank Way", sub: "The Mirador on Western",
     area: "North Acton · East Acton", pc: "W3 6TT", borough: "Ealing",
     lat: 51.518838, lng: -0.263355,
@@ -358,7 +357,7 @@ window.LISTINGS = [
     imgs: ["rosebank_map.jpg"], src: "LoopNet"
   },
   {
-    key: "actonln", tier: "C", west: true,
+    key: "actonln", tier: "B", west: true,
     name: "Visram House", sub: "250 Acton Lane",
     area: "Park Royal", pc: "NW10 7GG", borough: "Brent",
     lat: 51.530088, lng: -0.268218,
@@ -373,7 +372,7 @@ window.LISTINGS = [
     imgs: ["actonln_map.jpg"], src: "LoopNet"
   },
   {
-    key: "sterling", tier: "C", west: false,
+    key: "sterling", tier: "B", west: false,
     name: "Sterling Place", sub: "289 Burlington Road",
     area: "New Malden · Motspur Park", pc: "KT3 4BS", borough: "Merton",
     lat: 51.402107, lng: -0.237574,
@@ -388,7 +387,7 @@ window.LISTINGS = [
     imgs: ["sterling_1.jpg", "sterling_2.jpg"], src: "LoopNet / Rightmove"
   },
   {
-    key: "stewarts", tier: "C", west: false,
+    key: "stewarts", tier: "B", west: false,
     name: "7 Stewart's Place", sub: "",
     area: "Brixton", pc: "SW2 5DA", borough: "Lambeth",
     lat: 51.454216, lng: -0.123154,
