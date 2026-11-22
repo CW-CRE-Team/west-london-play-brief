@@ -1,8 +1,8 @@
 // 房源数据：面积单位 sq ft，租金单位 £/年（不含 VAT、服务费、营业税）
 // 资料来源：LoopNet / Rightmove 挂牌信息、中介宣传册、公开规划与开发商资料（2026 年 11 月整理）
 window.TIERS = {
-  A: { label: "重点推荐", note: "面积合适，位于住宅楼下或紧贴大型住宅社区" },
-  B: { label: "可考虑", note: "条件基本合适，有几项需要和业主确认" }
+  A: { label: "重点推荐", note: "团队按区域和人口数据筛选，标为区域好（绿色）" },
+  B: { label: "可考虑", note: "条件基本合适，区域未特别标注，可一并给客户筛选" }
 };
 
 window.LISTINGS = [
@@ -23,7 +23,7 @@ window.LISTINGS = [
     imgs: ["sulivan_1.jpg", "sulivan_2.jpg", "sulivan_3.jpg"], src: "CSP 宣传册"
   },
   {
-    key: "dolphin", tier: "A", west: false,
+    key: "dolphin", tier: "B", west: false,
     name: "Dolphin Square", sub: "Chichester Street 两个临街铺位",
     area: "Pimlico", pc: "SW1V 3LX", borough: "Westminster",
     lat: 51.486992, lng: -0.136544,
@@ -35,10 +35,10 @@ window.LISTINGS = [
     district: "Pimlico 是伦敦中心区人口密度最高的住宅区之一，紧邻 Westminster 和 Victoria。正对面就是 Pimlico Academy（中学）以及 Pimlico Primary 和幼儿园，旁边是 St George's Square 花园。附近还有 Churchill Gardens 等大型住宅区，家庭和年轻专业人士都多。Pimlico 地铁站（Victoria 线）步行可达，过河就是 Battersea Power Station。",
     fit: ["一栋楼约 1,234 户，客群稳定", "正对小学和幼儿园，放学后客流好", "两个单元可以分别租，也可以考虑一起租"],
     gaps: ["租金", "层高", "服务费", "两个单元能否打通"],
-    imgs: ["dolphin_map.jpg"], src: "LoopNet"
+    imgs: ["dolphin_1.jpg|Dolphin Square 外观 · 照片 Jim Osley / CC BY-SA 2.0","dolphin_2.jpg|Chichester Street 一侧 · 照片 Paul Farmer / CC BY-SA 2.0","dolphin_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
   {
-    key: "fortune", tier: "A", west: false,
+    key: "fortune", tier: "B", west: false,
     name: "37–63 Fortune Green Road", sub: "Alfred Court 底商",
     area: "West Hampstead", pc: "NW6 1UB", borough: "Camden",
     lat: 51.552975, lng: -0.193119,
@@ -53,7 +53,7 @@ window.LISTINGS = [
     imgs: ["fortune_1.jpg", "fortune_2.jpg"], src: "LoopNet / Rightmove"
   },
   {
-    key: "fulton", tier: "A", west: true,
+    key: "fulton", tier: "B", west: true,
     name: "Fulton & Fifth", sub: "Fulton Road 底商，多个单元",
     area: "Wembley Park", pc: "HA9 0TF", borough: "Brent",
     lat: 51.559786, lng: -0.275847,
@@ -65,10 +65,10 @@ window.LISTINGS = [
     district: "Wembley Park 是伦敦西北部这十年变化最大的片区，以 Wembley 球场、OVO Arena 和 London Designer Outlet 为核心，周边有上万套新建出租公寓。Bubble Planet 儿童体验馆和 Mundo Pixar 已经开在附近，周末家庭客流明显。Wembley Park 站（Jubilee、Metropolitan 线）到市中心约 15 分钟。",
     fit: ["周边已有儿童娱乐业态，客群已经形成", "面积可以组合，从 3,000 到 13,000 尺都能配", "大型新社区，家庭户持续入住"],
     gaps: ["服务费与营业税", "层高", "2027 年才能交付", "活动日（球场、演唱会）对交通和停车的影响"],
-    imgs: ["fulton_map.jpg"], src: "LoopNet"
+    imgs: ["fulton_1.jpg|Wembley Park 区域街景 · 照片 Mpoggi0fa / CC BY-SA 4.0","fulton_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
   {
-    key: "pavilion", tier: "A", west: true,
+    key: "pavilion", tier: "B", excluded: "团队标红排除（区域）", west: true,
     name: "Pavilion Court", sub: "First Way · Unit B",
     area: "Wembley Park", pc: "HA9（First Way）", borough: "Brent",
     lat: 51.5577, lng: -0.2788,
@@ -83,7 +83,7 @@ window.LISTINGS = [
     imgs: ["pavilion_1.jpg", "pavilion_2.jpg"], src: "Savills 宣传册"
   },
   {
-    key: "capital", tier: "A", west: true,
+    key: "capital", tier: "B", excluded: "团队标红排除（Brentford 位置存疑）", west: true,
     name: "Capital Interchange", sub: "38 Capital Interchange Way 底商",
     area: "Brentford · Kew Bridge", pc: "TW8 0XJ", borough: "Hounslow",
     lat: 51.492073, lng: -0.285765,
@@ -128,7 +128,7 @@ window.LISTINGS = [
     imgs: ["civic_1.jpg", "civic_2.jpg", "civic_3.jpg"], src: "CF Commercial 宣传册"
   },
   {
-    key: "burntoak", tier: "A", west: false,
+    key: "burntoak", tier: "B", west: false,
     name: "3 Burnt Oak Broadway", sub: "Neon · Unit 2",
     area: "Burnt Oak · Edgware", pc: "HA8 5LD", borough: "Brent",
     lat: 51.599257, lng: -0.266309,
@@ -140,12 +140,12 @@ window.LISTINGS = [
     district: "Burnt Oak 位于 Brent 和 Barnet 交界，是伦敦西北外围的平价住宅区，人口年轻，有孩子的家庭比例高，租金水平低。Edgware Road（A5）主干道经过，Burnt Oak 站（Northern 线）步行可达。附近 Colindale 一带正在建上万套新房。",
     fit: ["本清单单价最低（约 £17.5/尺）", "层高约 5.2 米", "楼上就是住宅"],
     gaps: ["服务费与营业税", "面积在客户区间的下限", "离西区核心较远"],
-    imgs: ["burntoak_map.jpg"], src: "LoopNet"
+    imgs: ["burntoak_1.jpg|Burnt Oak Broadway 街景 · 照片 David Howard / CC BY-SA 2.0","burntoak_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
 
   // ───────── B 可考虑 ─────────
   {
-    key: "courthouse", tier: "B", west: true,
+    key: "courthouse", tier: "A", west: true,
     name: "17 & 19 Courthouse Way", sub: "",
     area: "Wandsworth Town", pc: "SW18 4QG", borough: "Wandsworth",
     lat: 51.456069, lng: -0.191278,
@@ -160,7 +160,7 @@ window.LISTINGS = [
     imgs: ["courthouse_map.jpg"], src: "LoopNet"
   },
   {
-    key: "embassy", tier: "B", west: false,
+    key: "embassy", tier: "A", west: false,
     name: "Embassy Gardens · Legacy 3", sub: "Viaduct Gardens Unit 6",
     area: "Nine Elms", pc: "SW8 / SW11", borough: "Wandsworth",
     lat: 51.4818, lng: -0.1318,
@@ -172,10 +172,10 @@ window.LISTINGS = [
     district: "Nine Elms 是泰晤士河南岸的新城区，美国大使馆、Battersea Power Station 购物中心都在这里，Northern 线延长线的 Nine Elms 和 Battersea Power Station 两站已经开通。住户以高收入家庭和外籍家庭为主，新的学校和公园还在陆续配套。",
     fit: ["层高 4.88 米", "高端住宅社区，消费能力强"],
     gaps: ["租金", "挂牌时间很久，要先确认还在不在租", "餐饮装修要拆除"],
-    imgs: ["embassy_map.jpg"], src: "LoopNet"
+    imgs: ["embassy_1.jpg|Embassy Gardens 与 Sky Pool · 照片 The wub / CC BY-SA 4.0","embassy_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
   {
-    key: "aerodrome", tier: "B", west: false,
+    key: "aerodrome", tier: "B", excluded: "Tom：NW9 5LW 先拿掉", west: false,
     name: "Aerodrome Road · Unit 30", sub: "Beaufort Park",
     area: "Colindale", pc: "NW9 5LW", borough: "Barnet",
     lat: 51.594385, lng: -0.23925,
@@ -187,7 +187,7 @@ window.LISTINGS = [
     district: "Colindale 是伦敦这些年新增住宅最多的片区之一，Colindale Gardens、Beaufort Park 等项目加起来有上万套新房，年轻家庭很多，但儿童娱乐配套还很少。旁边就是皇家空军博物馆，Colindale 站（Northern 线）到市中心约 30 分钟。",
     fit: ["大社区，家庭人口多，同类业态少", "有专属车位"],
     gaps: ["交付状态", "层高", "营业税", "位置在北边，不算西区"],
-    imgs: ["aerodrome_map.jpg"], src: "LoopNet"
+    imgs: ["aerodrome_1.jpg|Beaufort Park 楼宇与铺位外观","aerodrome_2.jpg|铺位室内（原营销中心）","aerodrome_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
   {
     key: "chiswick", tier: "B", west: true,
@@ -202,25 +202,25 @@ window.LISTINGS = [
     district: "Chiswick 是西伦敦最成熟的中产家庭区之一，公立和私立学校口碑都好，有 Gunnersbury Park、Chiswick House 等大公园。High Road 两边餐厅和咖啡店很多。Gunnersbury 站（District 线、Overground）步行约 3 分钟，M4 一号出口就在附近。",
     fit: ["西区核心家庭区", "10 个车位，开车接送方便", "临街面宽 20 米，很显眼"],
     gaps: ["楼上是否为住宅", "层高", "服务费", "要等到 2027 年才能入住"],
-    imgs: ["chiswick_map.jpg"], src: "LoopNet"
+    imgs: ["chiswick_1.jpg|铺位外观","chiswick_2.jpg|铺位室内","chiswick_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
   {
-    key: "newunion", tier: "B", west: false,
+    key: "newunion", tier: "A", west: false,
     name: "10–12 New Union Square", sub: "",
     area: "Nine Elms", pc: "SW11 7AX", borough: "Wandsworth",
     lat: 51.481652, lng: -0.134976,
     size: "3,229–5,082（地面 + 一层）", sizeNum: 5082, floors: "地面层 + 一层",
-    rent: "£280,000 / 年", rentPa: 280000, psf: 55.10,
+    rent: "£177,906 / 年", rentPa: 177906, psf: 35.01,
     cond: "开放式空间，交付状态好", avail: "现在", use: "Class E",
-    resi: "所在楼为长租公寓（2023 年建成）",
-    building: "2023 年建成的长租公寓楼，铺位在街角，两面临街，EPC 能效 B 级，层高好、采光好。面积写法不一致：标题 5,082 尺，描述写 5,382 尺，最小可分出 3,229 尺。",
+    resi: "位于 Embassy Gardens 住宅社区内（2023 年建成）",
+    building: "位于 Embassy Gardens 社区内、2023 年建成的住宅楼，铺位在街角，两面临街，EPC 能效 B 级，层高好、采光好。面积写法不一致：标题 5,082 尺，描述写 5,382 尺，最小可分出 3,229 尺。",
     district: "同属 Nine Elms 新城区，步行 9 分钟到 Battersea Power Station。周边新建出租公寓集中，住户以年轻专业人士为主，有孩子的家庭在增加。",
-    fit: ["长租公寓楼下，街角铺"],
-    gaps: ["单价约 £55/尺，本清单最贵", "分在两层", "面积口径不一致"],
-    imgs: ["newunion_map.jpg"], src: "LoopNet"
+    fit: ["住宅楼下的街角铺", "已是开放式装修，交付状态好"],
+    gaps: ["不同平台报价不一致（LoopNet 曾写 £280,000/年，Zoopla 为 £177,906/年），以业主确认为准", "分在两层", "面积口径不一致"],
+    imgs: ["newunion_1.jpg|铺位外观","newunion_2.jpg|铺位入口","newunion_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
   {
-    key: "kingst", tier: "B", west: true,
+    key: "kingst", tier: "A", west: true,
     name: "120–124 King Street", sub: "",
     area: "Hammersmith", pc: "W6 0QU", borough: "Hammersmith & Fulham",
     lat: 51.492918, lng: -0.233009,
@@ -235,7 +235,7 @@ window.LISTINGS = [
     imgs: ["kingst_1.jpg", "kingst_2.jpg"], src: "Rightmove"
   },
   {
-    key: "white", tier: "B", west: true,
+    key: "white", tier: "B", excluded: "Carson 标紫：不太推荐", west: true,
     name: "The White Building", sub: "11 Evesham Street 地面层",
     area: "Notting Dale", pc: "W11 4AJ", borough: "Kensington & Chelsea",
     lat: 51.511416, lng: -0.219308,
@@ -262,10 +262,10 @@ window.LISTINGS = [
     district: "Chelsea King's Road 是伦敦最有名的消费街之一，周边是高净值家庭，私立学校很多。往南走就是泰晤士河 Chelsea Embankment，Sloane Square 和 South Kensington 站都在公交范围内。",
     fit: ["顶级家庭消费区", "面积够做旗舰店"],
     gaps: ["租金（预计很高）", "面积在需求上限", "楼体和层高信息都缺"],
-    imgs: ["kingsrd_map.jpg"], src: "LoopNet"
+    imgs: ["kingsrd_1.jpg|King's Road 街景 · 照片 David Howard / CC BY-SA 2.0","kingsrd_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
   {
-    key: "queensrd", tier: "B", west: false,
+    key: "queensrd", tier: "B", excluded: "Tom：SE15 2PT 先拿掉", west: false,
     name: "Queens Road", sub: "Peckham",
     area: "Peckham", pc: "SE15 2PT", borough: "Southwark",
     lat: 51.473699, lng: -0.063186,
@@ -277,7 +277,7 @@ window.LISTINGS = [
     district: "Peckham 在伦敦东南，年轻创意人群和家庭混居，社区氛围活跃。附近有 Prince of Peckham、Peckham Levels 和 Peckham Pulse 运动中心等。Queens Road Peckham 站（Overground）就在旁边。",
     fit: ["租金明确，层高好"],
     gaps: ["不在西区", "楼上用途", "挂牌时间较久"],
-    imgs: ["queensrd_map.jpg"], src: "LoopNet"
+    imgs: ["queensrd_1.jpg|Queens Road Peckham 街景 · 照片 Bill Boaden / CC BY-SA 2.0","queensrd_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
 
   // ───────── B 可考虑（续）─────────
@@ -297,7 +297,7 @@ window.LISTINGS = [
     imgs: ["finchley_1.jpg", "finchley_2.jpg"], src: "LoopNet / Rightmove"
   },
   {
-    key: "newkent", tier: "B", west: false,
+    key: "newkent", tier: "B", excluded: "Carson 标紫：不太推荐", west: false,
     name: "136–142 New Kent Road", sub: "New Kent Row",
     area: "Elephant & Castle", pc: "SE1 6UA", borough: "Southwark",
     lat: 51.493885, lng: -0.092094,
@@ -312,7 +312,7 @@ window.LISTINGS = [
     imgs: ["newkent_map.jpg"], src: "LoopNet"
   },
   {
-    key: "penrhyn", tier: "B", west: false,
+    key: "penrhyn", tier: "B", excluded: "团队标红排除（区域）", west: false,
     name: "12 Penrhyn Road", sub: "前教堂",
     area: "Kingston upon Thames", pc: "KT1 2ED", borough: "Kingston",
     lat: 51.403645, lng: -0.304616,
@@ -327,7 +327,7 @@ window.LISTINGS = [
     imgs: ["penrhyn_map.jpg"], src: "LoopNet"
   },
   {
-    key: "jasmine", tier: "B", west: true,
+    key: "jasmine", tier: "A", west: true,
     name: "Jasmine House · Unit 30", sub: "Battersea Reach",
     area: "Battersea Reach", pc: "SW18 1GL", borough: "Wandsworth",
     lat: 51.464121, lng: -0.183372,
@@ -342,7 +342,7 @@ window.LISTINGS = [
     imgs: ["jasmine_1.jpg", "jasmine_2.jpg"], src: "LoopNet / Rightmove"
   },
   {
-    key: "rosebank", tier: "B", west: true,
+    key: "rosebank", tier: "B", excluded: "Carson 标紫：不太推荐", west: true,
     name: "Rosebank Way", sub: "The Mirador on Western",
     area: "North Acton · East Acton", pc: "W3 6TT", borough: "Ealing",
     lat: 51.518838, lng: -0.263355,
@@ -357,7 +357,7 @@ window.LISTINGS = [
     imgs: ["rosebank_map.jpg"], src: "LoopNet"
   },
   {
-    key: "actonln", tier: "B", west: true,
+    key: "actonln", tier: "B", excluded: "团队标红排除（区域）", west: true,
     name: "Visram House", sub: "250 Acton Lane",
     area: "Park Royal", pc: "NW10 7GG", borough: "Brent",
     lat: 51.530088, lng: -0.268218,
@@ -372,7 +372,7 @@ window.LISTINGS = [
     imgs: ["actonln_map.jpg"], src: "LoopNet"
   },
   {
-    key: "sterling", tier: "B", west: false,
+    key: "sterling", tier: "B", excluded: "Tom：KT3 4BS 先拿掉", west: false,
     name: "Sterling Place", sub: "289 Burlington Road",
     area: "New Malden · Motspur Park", pc: "KT3 4BS", borough: "Merton",
     lat: 51.402107, lng: -0.237574,
@@ -387,7 +387,7 @@ window.LISTINGS = [
     imgs: ["sterling_1.jpg", "sterling_2.jpg"], src: "LoopNet / Rightmove"
   },
   {
-    key: "stewarts", tier: "B", west: false,
+    key: "stewarts", tier: "B", excluded: "团队标红排除（区域）", west: false,
     name: "7 Stewart's Place", sub: "",
     area: "Brixton", pc: "SW2 5DA", borough: "Lambeth",
     lat: 51.454216, lng: -0.123154,
