@@ -286,7 +286,7 @@ body.view-map .dash{display:none}
 <script src="data.js"></script>
 <script>
 (function(){
-  const T=window.TIERS, data=window.LISTINGS.filter(d=>!d.excluded).map((d,i)=>Object.assign({_i:i},d)).sort((a,b)=>a.tier.localeCompare(b.tier)||a._i-b._i).map((d,i)=>Object.assign(d,{no:i+1}));
+  const T=window.TIERS, data=window.LISTINGS.filter(d=>!d.excluded).map((d,i)=>Object.assign({_i:i},d)).sort((a,b)=>{const O=window.ORDER||[],x=O.indexOf(a.key),y=O.indexOf(b.key);return (x<0?999:x)-(y<0?999:y)||a._i-b._i;}).map((d,i)=>Object.assign(d,{no:i+1}));
   const file=x=>String(x).split('|')[0], cap=x=>String(x).split('|')[1]||'';
   const $=s=>document.querySelector(s);
   const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));

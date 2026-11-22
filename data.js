@@ -402,3 +402,6 @@ window.LISTINGS = [
     imgs: ["stewarts_1.jpg", "stewarts_2.jpg"], src: "LoopNet / Rightmove"
   }
 ];
+
+// 展示顺序（Tom 2026-11-22 调整）
+window.ORDER = ["civic", "courthouse", "embassy", "newunion", "dolphin", "fortune", "fulton", "burntoak", "chiswick", "kingsrd", "jasmine", "finchley", "sulivan", "york58", "kingst"];
