@@ -77,6 +77,7 @@ img{max-width:100%;display:block}
 .thumb .offtag{position:absolute;top:10px;right:10px;font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px;background:#6b6b6b;color:#fff}
 .pp.off{opacity:.5;filter:grayscale(1)}
 .dt tbody tr.off td{opacity:.45}
+.offtag2{display:inline-block;margin-left:6px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:#6b6b6b;color:#fff;vertical-align:middle}
 .dt tbody tr.off td img{filter:grayscale(1)}
 .card:hover{transform:translateY(-2px)}
 .thumb{position:relative;aspect-ratio:16/10;background:var(--line);overflow:hidden}
@@ -288,7 +289,7 @@ body.view-map .dash{display:none}
 </aside>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="data.js"></script>
+<script src="data.js?v=20261124b"></script>
 <script>
 (function(){
   const T=window.TIERS, data=window.LISTINGS.filter(d=>!d.excluded).map((d,i)=>Object.assign({_i:i},d)).sort((a,b)=>{const O=window.ORDER||[],x=O.indexOf(a.key),y=O.indexOf(b.key);return (x<0?999:x)-(y<0?999:y)||a._i-b._i;}).map((d,i)=>Object.assign(d,{no:i+1})).sort((a,b)=>(!!a.inactive)-(!!b.inactive)||a.no-b.no);
@@ -362,7 +363,7 @@ body.view-map .dash{display:none}
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
     map.zoomControl.setPosition('bottomright');
     data.forEach(d=>{
-      const html=`<div class="pp${d.inactive?' off':''}" data-k="${d.key}"><i>${d.no}</i>${d.rentPa?k(d.rentPa):'面议'}</div>`;
+      const html=`<div class="pp${d.inactive?' off':''}" data-k="${d.key}"><i>${d.no}</i>${d.inactive?esc(d.inactive):(d.rentPa?k(d.rentPa):'面议')}</div>`;
       const m=L.marker([d.lat,d.lng],{icon:L.divIcon({html,className:'',iconSize:[0,0]}),title:d.name,keyboard:true});
       m.on('click',()=>open(d.key));
       m.on('mouseover',()=>hl(d.key,true)); m.on('mouseout',()=>hl(d.key,false));
@@ -450,7 +451,7 @@ body.view-map .dash{display:none}
     $('#dtBody').innerHTML=list.map(d=>`<tr data-k="${d.key}" tabindex="0"${d.inactive?' class="off"':''}>
       <td class="num"><b>${d.no}</b></td>
       <td><img src="img/${file(d.imgs[0])}" alt="" loading="lazy"></td>
-      <td><div class="nm">${esc(d.name)}</div><div class="sm">${esc(d.sub)}</div></td>
+      <td><div class="nm">${esc(d.name)}${d.inactive?` <span class="offtag2">${esc(d.inactive)}</span>`:''}</div><div class="sm">${esc(d.sub)}</div></td>
       <td>${esc(d.area)}<div class="sm">${esc(d.pc)}${d.west?' · 西区':''}</div></td>
       <td class="num"><span class="hot">${d.sizeNum.toLocaleString('en-GB')}</span></td>
       <td>${esc(short(d.floors))}</td>
