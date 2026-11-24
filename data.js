@@ -38,7 +38,7 @@ window.LISTINGS = [
     imgs: ["dolphin_1.jpg|Dolphin Square 外观 · 照片 Jim Osley / CC BY-SA 2.0","dolphin_2.jpg|Chichester Street 一侧 · 照片 Paul Farmer / CC BY-SA 2.0","dolphin_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
   {
-    key: "fortune", tier: "B", west: false,
+    key: "fortune", inactive: "未入选", tier: "B", west: false,
     name: "37–63 Fortune Green Road", sub: "Alfred Court 底商",
     area: "West Hampstead", pc: "NW6 1UB", borough: "Camden",
     lat: 51.552975, lng: -0.193119,
@@ -53,7 +53,7 @@ window.LISTINGS = [
     imgs: ["fortune_1.jpg", "fortune_2.jpg"], src: "LoopNet / Rightmove"
   },
   {
-    key: "fulton", tier: "B", west: true,
+    key: "fulton", inactive: "未入选", tier: "B", west: true,
     name: "Fulton & Fifth", sub: "Fulton Road 底商，多个单元",
     area: "Wembley Park", pc: "HA9 0TF", borough: "Brent",
     lat: 51.559786, lng: -0.275847,
@@ -128,7 +128,7 @@ window.LISTINGS = [
     imgs: ["civic_1.jpg", "civic_2.jpg", "civic_3.jpg"], src: "CF Commercial 宣传册"
   },
   {
-    key: "burntoak", tier: "B", west: false,
+    key: "burntoak", inactive: "未入选", tier: "B", west: false,
     name: "3 Burnt Oak Broadway", sub: "Neon · Unit 2",
     area: "Burnt Oak · Edgware", pc: "HA8 5LD", borough: "Brent",
     lat: 51.599257, lng: -0.266309,
@@ -190,7 +190,7 @@ window.LISTINGS = [
     imgs: ["aerodrome_1.jpg|Beaufort Park 楼宇与铺位外观","aerodrome_2.jpg|铺位室内（原营销中心）","aerodrome_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
   {
-    key: "chiswick", tier: "B", west: true,
+    key: "chiswick", inactive: "未入选", tier: "B", west: true,
     name: "540 Chiswick High Road", sub: "",
     area: "Chiswick", pc: "W4 5RG", borough: "Hounslow",
     lat: 51.492994, lng: -0.27193,
@@ -220,7 +220,7 @@ window.LISTINGS = [
     imgs: ["newunion_1.jpg|铺位外观","newunion_2.jpg|铺位入口","newunion_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
   {
-    key: "kingst", tier: "A", west: true,
+    key: "kingst", inactive: "已出租", tier: "A", west: true,
     name: "120–124 King Street", sub: "",
     area: "Hammersmith", pc: "W6 0QU", borough: "Hammersmith & Fulham",
     lat: 51.492918, lng: -0.233009,
@@ -282,7 +282,7 @@ window.LISTINGS = [
 
   // ───────── B 可考虑（续）─────────
   {
-    key: "finchley", tier: "B", west: false,
+    key: "finchley", inactive: "未入选", tier: "B", west: false,
     name: "317 Finchley Road", sub: "",
     area: "Finchley Road · Frognal", pc: "NW3 6EP", borough: "Camden",
     lat: 51.550424, lng: -0.183412,
