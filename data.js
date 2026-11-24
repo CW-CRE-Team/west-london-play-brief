@@ -220,7 +220,7 @@ window.LISTINGS = [
     imgs: ["newunion_1.jpg|铺位外观","newunion_2.jpg|铺位入口","newunion_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
   {
-    key: "kingst", inactive: "Under offer", tier: "A", west: true,
+    key: "kingst", inactive: "Exchanged", tier: "A", west: true,
     name: "120–124 King Street", sub: "",
     area: "Hammersmith", pc: "W6 0QU", borough: "Hammersmith & Fulham",
     lat: 51.492918, lng: -0.233009,
