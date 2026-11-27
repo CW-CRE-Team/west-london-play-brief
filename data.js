@@ -8,7 +8,7 @@ window.TIERS = {
 window.LISTINGS = [
   // ───────── A 重点推荐 ─────────
   {
-    key: "sulivan", tier: "A", west: true,
+    key: "sulivan", inactive: "未入选", tier: "A", west: true,
     name: "50 Sulivan Road", sub: "Units 1–2",
     area: "Fulham · Sands End", pc: "SW6 3DX", borough: "Hammersmith & Fulham",
     lat: 51.465964, lng: -0.197365,
@@ -23,7 +23,7 @@ window.LISTINGS = [
     imgs: ["sulivan_1.jpg", "sulivan_2.jpg", "sulivan_3.jpg"], src: "CSP 宣传册"
   },
   {
-    key: "dolphin", tier: "B", west: false,
+    key: "dolphin", inactive: "未入选", tier: "B", west: false,
     name: "Dolphin Square", sub: "Chichester Street 两个临街铺位",
     area: "Pimlico", pc: "SW1V 3LX", borough: "Westminster",
     lat: 51.486992, lng: -0.136544,
@@ -98,7 +98,7 @@ window.LISTINGS = [
     imgs: ["capital_1.jpg", "capital_2.jpg"], src: "LoopNet / Rightmove"
   },
   {
-    key: "york58", tier: "A", west: true,
+    key: "york58", inactive: "未入选", tier: "A", west: true,
     name: "58–70 York Road", sub: "14 层住宅楼底商",
     area: "Battersea · York Road", pc: "SW11 3QD", borough: "Wandsworth",
     lat: 51.469807, lng: -0.176005,
@@ -113,7 +113,7 @@ window.LISTINGS = [
     imgs: ["york58_1.jpg", "york58_2.jpg"], src: "LoopNet / Rightmove"
   },
   {
-    key: "civic", tier: "A", west: true,
+    key: "civic", inactive: "未入选", tier: "A", west: true,
     name: "The Civic Campus", sub: "Hammersmith Town Hall 新街区",
     area: "Hammersmith", pc: "W6 9JU", borough: "Hammersmith & Fulham",
     lat: 51.491997, lng: -0.233966,
@@ -145,7 +145,7 @@ window.LISTINGS = [
 
   // ───────── B 可考虑 ─────────
   {
-    key: "courthouse", tier: "A", west: true,
+    key: "courthouse", inactive: "未入选", tier: "A", west: true,
     name: "17 & 19 Courthouse Way", sub: "",
     area: "Wandsworth Town", pc: "SW18 4QG", borough: "Wandsworth",
     lat: 51.456069, lng: -0.191278,
@@ -160,7 +160,7 @@ window.LISTINGS = [
     imgs: ["courthouse_map.jpg"], src: "LoopNet"
   },
   {
-    key: "embassy", tier: "A", west: false,
+    key: "embassy", chosen: "最终选择", tier: "A", west: false,
     name: "Embassy Gardens · Legacy 3", sub: "Viaduct Gardens Unit 6",
     area: "Nine Elms", pc: "SW8 / SW11", borough: "Wandsworth",
     lat: 51.4818, lng: -0.1318,
@@ -205,7 +205,7 @@ window.LISTINGS = [
     imgs: ["chiswick_1.jpg|铺位外观","chiswick_2.jpg|铺位室内","chiswick_map.jpg|位置图 · © OpenStreetMap"], src: "LoopNet"
   },
   {
-    key: "newunion", tier: "A", west: false,
+    key: "newunion", inactive: "未入选", tier: "A", west: false,
     name: "10–12 New Union Square", sub: "",
     area: "Nine Elms", pc: "SW11 7AX", borough: "Wandsworth",
     lat: 51.481652, lng: -0.134976,
@@ -250,7 +250,7 @@ window.LISTINGS = [
     imgs: ["white_1.jpg", "white_2.jpg"], src: "Rightmove"
   },
   {
-    key: "kingsrd", tier: "B", west: false,
+    key: "kingsrd", inactive: "未入选", tier: "B", west: false,
     name: "267–277 King's Road", sub: "",
     area: "Chelsea", pc: "SW3 5EN", borough: "Kensington & Chelsea",
     lat: 51.485788, lng: -0.172631,
@@ -327,7 +327,7 @@ window.LISTINGS = [
     imgs: ["penrhyn_map.jpg"], src: "LoopNet"
   },
   {
-    key: "jasmine", tier: "A", west: true,
+    key: "jasmine", inactive: "未入选", tier: "A", west: true,
     name: "Jasmine House · Unit 30", sub: "Battersea Reach",
     area: "Battersea Reach", pc: "SW18 1GL", borough: "Wandsworth",
     lat: 51.464121, lng: -0.183372,

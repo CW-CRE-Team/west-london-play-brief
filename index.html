@@ -79,6 +79,10 @@ img{max-width:100%;display:block}
 .dt tbody tr.off td{opacity:.45}
 .offtag2{display:inline-block;margin-left:6px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:#6b6b6b;color:#fff;vertical-align:middle}
 .dt tbody tr.off td img{filter:grayscale(1)}
+.thumb .chosentag{position:absolute;top:10px;right:10px;font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px;background:#0E6B55;color:#fff}
+.card.chosen{outline:3px solid #0E6B55;outline-offset:-3px}
+.pp.chosen{background:#0E6B55;color:#fff}
+.chosentag2{display:inline-block;margin-left:6px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:#0E6B55;color:#fff;vertical-align:middle}
 .card:hover{transform:translateY(-2px)}
 .thumb{position:relative;aspect-ratio:16/10;background:var(--line);overflow:hidden}
 .thumb img{width:100%;height:100%;object-fit:cover}
@@ -341,8 +345,8 @@ body.view-map .dash{display:none}
       ['单价范围',ps.length?'£'+ps[0].toFixed(2)+'–'+ps[ps.length-1].toFixed(2):'—']
     ].map(([a,b])=>`<div class="stat">${a}<b>${b}</b></div>`).join('');
     $('#grid').innerHTML=list.length?list.map(d=>`
-      <button type="button" class="card${d.inactive?' off':''}" data-k="${d.key}">
-        <div class="thumb"><img src="img/${file(d.imgs[0])}" alt="" loading="lazy"><span class="no">${d.no}</span>${d.inactive?`<span class="offtag">${esc(d.inactive)}</span>`:''}${isMap(d)?'<span class="mapnote">位置图</span>':''}</div>
+      <button type="button" class="card${d.inactive?' off':''}${d.chosen?' chosen':''}" data-k="${d.key}">
+        <div class="thumb"><img src="img/${file(d.imgs[0])}" alt="" loading="lazy"><span class="no">${d.no}</span>${d.inactive?`<span class="offtag">${esc(d.inactive)}</span>`:''}${d.chosen?`<span class="chosentag">${esc(d.chosen)}</span>`:''}${isMap(d)?'<span class="mapnote">位置图</span>':''}</div>
         <div class="cbody">
           <div class="crow"><div class="cname">${esc(d.name)}</div><div class="price ${d.rentPa?'':'poa'}">${priceShort(d)}</div></div>
           <div class="cloc">${esc(d.area)} · ${esc(d.pc)}${d.west?' · <span class="west">西区</span>':''}</div>
@@ -363,7 +367,7 @@ body.view-map .dash{display:none}
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
     map.zoomControl.setPosition('bottomright');
     data.forEach(d=>{
-      const html=`<div class="pp${d.inactive?' off':''}" data-k="${d.key}"><i>${d.no}</i>${d.inactive?esc(d.inactive):(d.rentPa?k(d.rentPa):'面议')}</div>`;
+      const html=`<div class="pp${d.inactive?' off':''}${d.chosen?' chosen':''}" data-k="${d.key}"><i>${d.no}</i>${d.inactive?esc(d.inactive):d.chosen?esc(d.chosen):(d.rentPa?k(d.rentPa):'面议')}</div>`;
       const m=L.marker([d.lat,d.lng],{icon:L.divIcon({html,className:'',iconSize:[0,0]}),title:d.name,keyboard:true});
       m.on('click',()=>open(d.key));
       m.on('mouseover',()=>hl(d.key,true)); m.on('mouseout',()=>hl(d.key,false));
@@ -388,7 +392,7 @@ body.view-map .dash{display:none}
     $('#dBody').innerHTML=`
       <div class="gal" id="gal">${imgs}${multi?'<button class="arr prev" type="button" aria-label="上一张">‹</button><button class="arr next" type="button" aria-label="下一张">›</button><span class="cnt">1 / '+d.imgs.length+'</span>':''}<span class="src" id="galCap">${esc(cap(d.imgs[0])||(isMap(d)?'位置图 · © OpenStreetMap':'图片：'+d.src))}</span></div>
       <div class="d-pad">
-        <div class="d-tags"><span class="pill">#${d.no}</span>${d.inactive?`<span class="pill" style="background:#e6e6e6;color:#555">${esc(d.inactive)}</span>`:''}${d.west?'<span class="pill">西区</span>':''}</div>
+        <div class="d-tags"><span class="pill">#${d.no}</span>${d.inactive?`<span class="pill" style="background:#e6e6e6;color:#555">${esc(d.inactive)}</span>`:''}${d.chosen?`<span class="pill" style="background:#0E6B55;color:#fff">${esc(d.chosen)}</span>`:''}${d.west?'<span class="pill">西区</span>':''}</div>
         <h2 class="d-title">${esc(d.name)}</h2>
         <p class="d-loc">${esc(d.sub?d.sub+' · ':'')}${esc(d.area)} · ${esc(d.pc)} · ${esc(d.borough)}</p>
         <div class="d-price"><b>${d.rentPa?k(d.rentPa)+' / 年':'租金面议'}</b><span>${esc(d.rent)}${d.psf&&!/sq ft/.test(d.rent)?' · 约 £'+d.psf.toFixed(2)+' / sq ft':''}</span></div>
@@ -451,7 +455,7 @@ body.view-map .dash{display:none}
     $('#dtBody').innerHTML=list.map(d=>`<tr data-k="${d.key}" tabindex="0"${d.inactive?' class="off"':''}>
       <td class="num"><b>${d.no}</b></td>
       <td><img src="img/${file(d.imgs[0])}" alt="" loading="lazy"></td>
-      <td><div class="nm">${esc(d.name)}${d.inactive?` <span class="offtag2">${esc(d.inactive)}</span>`:''}</div><div class="sm">${esc(d.sub)}</div></td>
+      <td><div class="nm">${esc(d.name)}${d.inactive?` <span class="offtag2">${esc(d.inactive)}</span>`:''}${d.chosen?` <span class="chosentag2">${esc(d.chosen)}</span>`:''}</div><div class="sm">${esc(d.sub)}</div></td>
       <td>${esc(d.area)}<div class="sm">${esc(d.pc)}${d.west?' · 西区':''}</div></td>
       <td class="num"><span class="hot">${d.sizeNum.toLocaleString('en-GB')}</span></td>
       <td>${esc(short(d.floors))}</td>
