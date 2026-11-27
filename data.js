@@ -160,7 +160,7 @@ window.LISTINGS = [
     imgs: ["courthouse_map.jpg"], src: "LoopNet"
   },
   {
-    key: "embassy", chosen: "最终选择", tier: "A", west: false,
+    key: "embassy", tier: "A", west: false,
     name: "Embassy Gardens · Legacy 3", sub: "Viaduct Gardens Unit 6",
     area: "Nine Elms", pc: "SW8 / SW11", borough: "Wandsworth",
     lat: 51.4818, lng: -0.1318,
