@@ -8,7 +8,7 @@ window.TIERS = {
 window.LISTINGS = [
   // ───────── A 重点推荐 ─────────
   {
-    key: "sulivan", inactive: "未入选", tier: "A", west: true,
+    key: "sulivan", tier: "A", west: true,
     name: "50 Sulivan Road", sub: "Units 1–2",
     area: "Fulham · Sands End", pc: "SW6 3DX", borough: "Hammersmith & Fulham",
     lat: 51.465964, lng: -0.197365,
@@ -98,7 +98,7 @@ window.LISTINGS = [
     imgs: ["capital_1.jpg", "capital_2.jpg"], src: "LoopNet / Rightmove"
   },
   {
-    key: "york58", inactive: "未入选", tier: "A", west: true,
+    key: "york58", tier: "A", west: true,
     name: "58–70 York Road", sub: "14 层住宅楼底商",
     area: "Battersea · York Road", pc: "SW11 3QD", borough: "Wandsworth",
     lat: 51.469807, lng: -0.176005,
@@ -113,7 +113,7 @@ window.LISTINGS = [
     imgs: ["york58_1.jpg", "york58_2.jpg"], src: "LoopNet / Rightmove"
   },
   {
-    key: "civic", inactive: "未入选", tier: "A", west: true,
+    key: "civic", tier: "A", west: true,
     name: "The Civic Campus", sub: "Hammersmith Town Hall 新街区",
     area: "Hammersmith", pc: "W6 9JU", borough: "Hammersmith & Fulham",
     lat: 51.491997, lng: -0.233966,
